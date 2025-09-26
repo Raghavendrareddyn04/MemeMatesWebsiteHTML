@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ready to start creating?</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+          --primary-color: #54296D;
+          --background-color: #54296D;
+          --tag-bg-color: #000000;
+          --tag-text-color: #FFFFFF;
+          --button-bg-color: #FFFFFF;
+          --button-text-color: #000000;
+          --icon-bg-color: #D0FC5A;
+          --icon-fg-color: #000000;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @keyframes hoverLift {
+          0% {
+            transform: translateY(0) scale(1) rotate(0deg);
+            box-shadow: -40px 40px 80px rgba(0,0,0,0.15);
+          }
+          50% {
+            transform: translateY(-20px) scale(1.1) rotate(-4deg);
+            box-shadow: -60px 60px 120px rgba(0,0,0,0.25);
+          }
+          100% {
+            transform: translateY(-10px) scale(1.05) rotate(0deg);
+            box-shadow: -50px 50px 100px rgba(0,0,0,0.2);
+          }
+        }
+        @keyframes hoverLiftRight {
+          0% {
+            transform: translateY(0) scale(1) rotate(10deg);
+            box-shadow: -40px 40px 40px rgba(0,0,0,0.25);
+          }
+          50% {
+            transform: translateY(-20px) scale(1.1) rotate(14deg);
+            box-shadow: -60px 60px 60px rgba(0,0,0,0.35);
+          }
+          100% {
+            transform: translateY(-10px) scale(1.05) rotate(10deg);
+            box-shadow: -50px 50px 50px rgba(0,0,0,0.3);
+          }
+        }
+        @keyframes autoSeesawLeft {
+          0% { transform: rotateY(0deg); }
+          50% { transform: rotateY(-5deg); }
+          100% { transform: rotateY(0deg); }
+        }
+        @keyframes autoSeesawRight {
+          0% { transform: rotate(10deg) rotateY(0deg); }
+          50% { transform: rotate(10deg) rotateY(5deg); }
+          100% { transform: rotate(10deg) rotateY(0deg); }
+        }
+        .animate-hover-lift {
+          animation: autoSeesawLeft 1s ease-in-out infinite;
+          transform-origin: center;
+        }
+        .animate-hover-lift:hover {
+          animation: hoverLift 0.6s ease-in-out forwards;
+        }
+        .animate-hover-lift-right {
+          animation: autoSeesawRight 1s ease-in-out infinite;
+          transform-origin: center;
+        }
+        .animate-hover-lift-right:hover {
+          animation: hoverLiftRight 0.6s ease-in-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-[var(--background-color)] text-white">
+<div class="flex items-center justify-center min-h-screen">
+<div class="text-center p-4 max-w-4xl mx-auto">
+<div class="flex justify-center space-x-4 mb-4">
+<div class="bg-[var(--tag-bg-color)] text-[var(--tag-text-color)] text-sm font-medium px-4 py-2 rounded-full flex items-center">
+<span class="w-2.5 h-2.5 bg-[#D0FC5A] rounded-full mr-2"></span>
+                Free to Join
+            </div>
+<div class="bg-[var(--tag-bg-color)] text-[var(--tag-text-color)] text-sm font-medium px-4 py-2 rounded-full flex items-center">
+<span class="w-2.5 h-2.5 bg-[#D0FC5A] rounded-full mr-2"></span>
+                No Hidden Fees
+            </div>
+</div>
+<h1 class="text-6xl md:text-8xl font-bold mb-4 leading-tight">
+            Ready to start<br/>creating?
+        </h1>
+<p class="text-gray-300 max-w-2xl mx-auto text-lg mb-6">
+            Join our community and start building meaningful connections through shared humor and authentic expression.
+        </p>
+<div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+<button class="bg-[var(--button-bg-color)] text-[var(--button-text-color)] font-semibold py-3 px-6 rounded-xl flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors w-64">
+<div class="w-12 h-12 bg-[var(--icon-bg-color)] rounded-full flex items-center justify-center mr-4">
+<i class="fab fa-apple text-2xl text-[var(--icon-fg-color)]"></i>
+</div>
+<span class="text-lg">Download iOS</span>
+</button>
+<button class="bg-[var(--button-bg-color)] text-[var(--button-text-color)] font-semibold py-3 px-6 rounded-xl flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors w-64">
+<div class="w-12 h-12 bg-[var(--icon-bg-color)] rounded-full flex items-center justify-center mr-4">
+<i class="fab fa-android text-2xl text-[var(--icon-fg-color)]"></i>
+</div>
+<span class="text-lg">Download Android</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Extended background section with interactive images matching reference -->
+<div class="bg-[var(--background-color)] py-12 relative flex justify-center items-center -mt-32" style="perspective: 1000px;">
+  <div style="position: relative; transform: rotate(-40deg) rotateX(30deg) rotateY(33deg); z-index: 1; width: 919px;">
+    <div class="flex items-center justify-center">
+      <!-- Left image container -->
+      <div style="flex: 1 0 0; width: 527px; height: 520px; border-radius: 40px; box-shadow: -40px 40px 80px rgba(0,0,0,0.15);" class="animate-hover-lift">
+        <img src="./asettes/JCSraeK2peMCkW2TeOj8HqgMn9Y.webp" alt="App screenshot" style="width: 527px; height: 520px; object-fit: contain;" />
+      </div>
+      <!-- Dashed line -->
+      <div style="width: 4px; height: 520px; border-left: 4px dashed #ffffff; position: relative; left: 0px; transform: rotate(10deg); margin: 0 8px;"></div>
+      <!-- Right image container -->
+      <div style="width: 392px; height: 520px; border-radius: 40px; box-shadow: -40px 40px 40px rgba(0,0,0,0.25); transform: rotate(10deg);" class="animate-hover-lift-right">
+        <img src="./asettes/a2To5eLJjDizUuuemYzkS9b0.avif" alt="App logo screen" style="width: 392px; height: 520px; object-fit: contain;" />
+      </div>
+    </div>
+  </div>
+</div>
+
+</body></html>
