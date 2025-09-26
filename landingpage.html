@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Header</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: '#a3c14a',
+            'background-light': '#ffffff',
+            'background-dark': '#3f2a56',
+            'text-light': '#3f2a56',
+            'text-dark': '#ffffff'
+          },
+          fontFamily: {
+            display: ['Roboto', 'sans-serif'],
+          },
+          borderRadius: {
+            'full': '9999px',
+          },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background-dark font-display">
+<header class="p-4">
+<div class="container mx-auto">
+<div class="bg-background-light dark:bg-opacity-10 dark:bg-white flex justify-between items-center px-4 py-2 rounded-full shadow-md">
+<div class="flex items-center">
+<img alt="Company Logo" class="h-12 w-12" src="asettes/logo-512x512.png"/>
+</div>
+<div class="flex items-center space-x-8">
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-text-light dark:text-text-dark text-lg font-medium hover:text-primary" href="#">Features</a>
+<a class="text-text-light dark:text-text-dark text-lg font-medium hover:text-primary" href="#">How it Works</a>
+</nav>
+<a class="bg-primary text-text-light text-lg font-medium py-3 px-8 rounded-full hover:bg-opacity-90" href="#">Download App</a>
+</div>
+</div>
+</div>
+</header>
+
+</body></html>
