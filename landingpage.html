@@ -64,7 +64,7 @@
   
   <!-- Overlay logo -->
   <div class="absolute inset-0 flex items-center justify-center">
-    <div class="bg-white p-8 rounded-3xl shadow-lg">
+    <div class="bg-white p-8 rounded-3xl shadow-2xl logo-3d">
       <img alt="Company Logo" class="h-60 w-60" src="asettes/logo-512x512.png"/>
     </div>
   </div>
@@ -90,6 +90,26 @@
   .animate-scroll {
     animation: scroll 15s linear infinite;
     display: inline-block;
+  }
+  
+  .logo-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    animation: float 3s ease-in-out infinite;
+    transition: transform 0.3s ease;
+  }
+  
+  .logo-3d:hover {
+    transform: rotateY(360deg) rotateX(15deg);
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px) rotateY(-15deg) rotateX(5deg);
+    }
+    50% {
+      transform: translateY(-10px) rotateY(15deg) rotateX(-5deg);
+    }
   }
 </style>
 
