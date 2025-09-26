@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MemeMates</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#D7FE40",
+                        "background-light": "#FFFFFF",
+                        "background-dark": "#000000",
+                        "text-light": "#000000",
+                        "text-dark": "#FFFFFF",
+                    },
+                    fontFamily: {
+                        display: ["Poppins", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        .material-icons {
+            font-size: 24px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="flex flex-col items-center justify-start pt-20 text-center px-4">
+<header class="mb-6">
+<img alt="MemeMates Logo" class="h-12 w-12 mx-auto mb-4" src="asettes/logo-512x512.png"/>
+</header>
+<main>
+<h1 class="text-4xl md:text-5xl font-bold text-text-light dark:text-text-dark mb-4">Real Features, Real Connections</h1>
+<p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-xl mx-auto">
+                Discover the tools that make MemeMates a premium platform for creative social connections.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+<a class="flex items-center justify-center bg-text-light dark:bg-text-dark text-background-light dark:text-background-dark py-3 px-6 rounded-full font-semibold transition-transform transform hover:scale-105 w-full sm:w-auto" href="#">
+<div class="bg-primary rounded-full p-2 mr-3">
+<span class="material-icons text-text-light">apple</span>
+</div>
+                    Download iOS
+                </a>
+<a class="flex items-center justify-center bg-text-light dark:bg-text-dark text-background-light dark:text-background-dark py-3 px-6 rounded-full font-semibold transition-transform transform hover:scale-105 w-full sm:w-auto" href="#">
+<div class="bg-primary rounded-full p-2 mr-3">
+<span class="material-icons text-text-light">android</span>
+</div>
+                    Download Android
+                </a>
+</div>
+</main>
+</div>
+
+</body></html>
