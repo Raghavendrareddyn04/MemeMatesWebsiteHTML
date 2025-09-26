@@ -46,4 +46,29 @@
 </div>
 </header>
 
+<!-- Scrolling text section -->
+<section class="py-32 flex items-center justify-center min-h-screen">
+  <div class="w-full overflow-hidden">
+    <div class="animate-scroll text-9xl md:text-[12rem] font-bold text-center text-white whitespace-nowrap opacity-40">
+      Humour First Social Platform Humour First Social Platform Humour First Social Platform Humour First Social Platform Humour First Social Platform
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes scroll {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-33.33%);
+    }
+  }
+  
+  .animate-scroll {
+    animation: scroll 15s linear infinite;
+    display: inline-block;
+  }
+</style>
+
 </body></html>
