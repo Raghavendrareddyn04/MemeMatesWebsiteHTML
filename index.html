@@ -8,6 +8,57 @@
     <!-- Start of headStart -->
     
     <!-- End of headStart -->
+    <script>
+    (function() {
+        window.addEventListener('load', function() {
+            try {
+                var currentPath = window.location.pathname || '/';
+                // Normalize duplicate segments like /legal/legal -> /legal
+                currentPath = currentPath.replace(/\/legal\/legal/g, '/legal');
+
+                if (window.location.pathname !== currentPath) {
+                    history.replaceState(null, '', currentPath);
+                }
+
+                // Do nothing on home
+                if (currentPath === '/' || currentPath === '') return;
+
+                // Match the same internal link patterns Framer uses
+                var selector = 'div#main a[href^="#"],div#main a[href^="/"],div#main a[href^="."]';
+                var anchors = document.querySelectorAll(selector);
+                var targetAnchor = null;
+
+                // Normalize trailing slashes for comparison
+                var normalizedCurrent = currentPath.replace(/\/+$/, '') || '/';
+
+                for (var i = 0; i < anchors.length; i++) {
+                    var a = anchors[i];
+                    try {
+                        var url = new URL(a.href, window.location.origin);
+                        var aPath = (url.pathname || '/').replace(/\/+$/, '') || '/';
+                        if (aPath === normalizedCurrent) {
+                            targetAnchor = a;
+                            break;
+                        }
+                    } catch (e) {
+                        // ignore malformed hrefs
+                    }
+                }
+
+                // Fallback: if on a sub-legal page but no exact match, try the base /legal link
+                if (!targetAnchor && normalizedCurrent.indexOf('/legal/') === 0) {
+                    targetAnchor = document.querySelector('div#main a[href="/legal"]');
+                }
+
+                if (targetAnchor) {
+                    targetAnchor.click();
+                }
+            } catch (e) {
+                // silently ignore
+            }
+        });
+    })();
+    </script>
     <meta name="viewport" content="width=device-width">
     <meta name="generator" content="Framer 04b9457">
     <title>MemeMates - Create. Connect. Laugh together.</title>
