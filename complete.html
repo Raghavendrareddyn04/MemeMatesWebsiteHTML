@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Complete Single Page</title>
+<!-- Global assets and Tailwind setup for the combined single page -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<!-- Tailwind config: unified, with fonts/colors extended to support all sections -->
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          primary: '#D7FE40',
+          'background-light': '#FFFFFF',
+          'background-dark': '#000000',
+          'text-light': '#000000',
+          'text-dark': '#FFFFFF',
+          'brand-purple': '#4F46E5',
+          'brand-pink': '#EC4899',
+        },
+        fontFamily: {
+          display: ['Inter','Poppins','Roboto','sans-serif'],
+        },
+        borderRadius: {
+          DEFAULT: '1.5rem',
+          full: '9999px',
+        },
+      },
+    },
+  }
+</script>
+<!-- Scoped CSS: keeps each original page's look isolated within its section -->
+<style>
+  /* ===== Section tokens and overrides ===== */
+  #landing .bg-primary { background-color: #a3c14a !important; }
+  #landing .text-primary { color: #a3c14a !important; }
+  /* Restore original landing page palette */
+  #landing { background-color: #3f2a56; }
+  #landing .bg-background-dark { background-color: #3f2a56 !important; }
+  #landing .text-text-light { color: #3f2a56 !important; }
+  #landing .text-text-dark { color: #ffffff !important; }
+  #post-landing .bg-primary { background-color: #D7FE40 !important; }
+  #post-landing .text-primary { color: #D7FE40 !important; }
+  #bottom-sec .bg-primary { background-color: #D8B4FE !important; }
+  #bottom-sec .text-primary { color: #D8B4FE !important; }
+
+  /* ===== Post Landing specific ===== */
+  #post-landing .material-icons { font-size: 24px; vertical-align: middle; }
+
+  /* ===== Pre Bottom specific ===== */
+  #pre-bottom1 { --primary-color: #54296D; --background-color: #54296D; --tag-bg-color: #000000; --tag-text-color: #FFFFFF; --button-bg-color: #FFFFFF; --button-text-color: #000000; --icon-bg-color: #D0FC5A; --icon-fg-color: #000000; }
+  #pre-bottom1 { font-family: 'Inter', sans-serif; }
+  @keyframes hoverLift { 0% { transform: translateY(0) scale(1) rotate(0deg); box-shadow: -40px 40px 80px rgba(0,0,0,0.15);} 50% { transform: translateY(-20px) scale(1.1) rotate(-4deg); box-shadow: -60px 60px 120px rgba(0,0,0,0.25);} 100% { transform: translateY(-10px) scale(1.05) rotate(0deg); box-shadow: -50px 50px 100px rgba(0,0,0,0.2);} }
+  @keyframes hoverLiftRight { 0% { transform: translateY(0) scale(1) rotate(10deg); box-shadow: -40px 40px 40px rgba(0,0,0,0.25);} 50% { transform: translateY(-20px) scale(1.1) rotate(14deg); box-shadow: -60px 60px 60px rgba(0,0,0,0.35);} 100% { transform: translateY(-10px) scale(1.05) rotate(10deg); box-shadow: -50px 50px 50px rgba(0,0,0,0.3);} }
+  @keyframes autoSeesawLeft { 0% { transform: rotateY(0deg);} 50% { transform: rotateY(-5deg);} 100% { transform: rotateY(0deg);} }
+  @keyframes autoSeesawRight { 0% { transform: rotate(10deg) rotateY(0deg);} 50% { transform: rotate(10deg) rotateY(5deg);} 100% { transform: rotate(10deg) rotateY(0deg);} }
+  #pre-bottom1 .animate-hover-lift { animation: autoSeesawLeft 1s ease-in-out infinite; transform-origin: center; }
+  #pre-bottom1 .animate-hover-lift:hover { animation: hoverLift 0.6s ease-in-out forwards; }
+  #pre-bottom1 .animate-hover-lift-right { animation: autoSeesawRight 1s ease-in-out infinite; transform-origin: center; }
+  #pre-bottom1 .animate-hover-lift-right:hover { animation: hoverLiftRight 0.6s ease-in-out forwards; }
+
+  /* ===== Bottom specific ===== */
+  .font-display { font-family: 'Inter', sans-serif; }
+  #bottom-sec { background-color: #000000; }
+
+  /* ===== Landing specific ===== */
+  @keyframes scroll { 0% { transform: translateX(0%);} 100% { transform: translateX(-33.33%);} }
+  #landing .animate-scroll { animation: scroll 15s linear infinite; display: inline-block; }
+  #landing .logo-3d { transform-style: preserve-3d; perspective: 1000px; animation: float 3s ease-in-out infinite; transition: transform 0.3s ease; }
+  #landing .logo-3d:hover { transform: rotateY(360deg) rotateX(15deg); }
+  @keyframes float { 0%, 100% { transform: translateY(0px) rotateY(-15deg) rotateX(5deg);} 50% { transform: translateY(-10px) rotateY(15deg) rotateX(-5deg);} }
+  #landing .phone-mockup { position: absolute; width: 120px; height: 240px; z-index: 5; filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3)); }
+  #landing .phone-frame { width: 100%; height: 100%; background: transparent; border-radius: 0; padding: 0; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); position: relative; }
+  #landing .phone-frame::before { display: none; }
+  #landing .phone-screen { width: 100%; height: 100%; border-radius: 0; object-fit: contain; display: block; }
+  @media (max-width: 1024px) { #landing .phone-mockup { width: 100px; height: 200px; } }
+  @media (max-width: 768px) {
+    #landing .phone-mockup { width: 80px; height: 160px; }
+    #landing .phone-mockup:nth-child(1) { top: 10px !important; left: 12px !important; transform: rotate(8deg) !important; }
+    #landing .phone-mockup:nth-child(2) { top: 8px !important; right: 10px !important; transform: rotate(-12deg) !important; }
+    #landing .phone-mockup:nth-child(3) { top: 50% !important; left: 8px !important; transform: translateY(-50%) rotate(15deg) !important; }
+    #landing .phone-mockup:nth-child(4) { top: 50% !important; right: 6px !important; transform: translateY(-50%) rotate(6deg) !important; }
+    #landing .phone-mockup:nth-child(5) { bottom: 10px !important; left: 10px !important; transform: rotate(-25deg) !important; }
+    #landing .phone-mockup:nth-child(6) { bottom: 8px !important; right: 12px !important; transform: rotate(-8deg) !important; }
+  }
+</style>
+</head>
+<body class="font-display">
+
+<!-- ==================== SECTION: Landing (from landingpage.html) ==================== -->
+<section id="landing" class="bg-background-dark">
+  <header class="p-4">
+    <div class="container mx-auto">
+      <div class="bg-background-light dark:bg-opacity-10 dark:bg-white flex justify-between items-center px-4 py-2 rounded-full shadow-md">
+        <div class="flex items-center">
+          <img alt="Company Logo" class="h-12 w-12" src="assets/logo-512x512.png"/>
+        </div>
+        <div class="flex items-center space-x-8">
+          <nav class="hidden md:flex items-center space-x-8">
+            <a class="text-text-light dark:text-text-dark text-lg font-medium hover:text-primary" href="#">Features</a>
+            <a class="text-text-light dark:text-text-dark text-lg font-medium hover:text-primary" href="#">How it Works</a>
+          </nav>
+          <a class="bg-primary text-text-light text-lg font-medium py-3 px-8 rounded-full hover:bg-opacity-90" href="#">Download App</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="flex items-center justify-center min-h-screen relative">
+    <div class="w-full overflow-hidden">
+      <div class="animate-scroll text-9xl md:text-[12rem] font-bold text-center text-white whitespace-nowrap opacity-40">
+        Humour First Social Platform Humour First Social Platform Humour First Social Platform Humour First Social Platform Humour First Social Platform
+      </div>
+    </div>
+
+    <div class="absolute inset-0 flex items-center justify-center" style="transform: translateY(-230px);">
+      <div class="text-white text-5xl font-bold text-center">
+        Create. Connect.<br>Laugh Together.
+      </div>
+    </div>
+
+    <div class="absolute inset-0 flex items-center justify-center">
+      <div class="bg-white p-8 rounded-3xl shadow-2xl logo-3d z-10">
+        <img alt="Company Logo" class="h-60 w-60" src="assets/logo-512x512.png"/>
+      </div>
+
+      <div class="absolute top-20 left-24 phone-mockup transform rotate-8 hover:scale-105 transition-all duration-300">
+        <div class="phone-frame"><img src="assets/landing (1).avif" alt="Dating Profile" class="phone-screen"/></div>
+      </div>
+      <div class="absolute top-16 right-20 phone-mockup transform -rotate-12 hover:scale-105 transition-all duration-300">
+        <div class="phone-frame"><img src="assets/landing (2).avif" alt="Social Profile" class="phone-screen"/></div>
+      </div>
+      <div class="absolute top-1/2 left-16 phone-mockup transform rotate-15 hover:scale-105 transition-all duration-300" style="transform: translateY(-50%) rotate(15deg);">
+        <div class="phone-frame"><img src="assets/landing (3).avif" alt="Match Notification" class="phone-screen"/></div>
+      </div>
+      <div class="absolute top-1/2 right-12 phone-mockup transform rotate-6 hover:scale-105 transition-all duration-300" style="transform: translateY(-50%) rotate(6deg);">
+        <div class="phone-frame"><img src="assets/landing (4).avif" alt="Meme Feed" class="phone-screen"/></div>
+      </div>
+      <div class="absolute bottom-20 left-20 phone-mockup transform -rotate-25 hover:scale-105 transition-all duration-300">
+        <div class="phone-frame"><img src="assets/landing (5).avif" alt="Social Feed" class="phone-screen"/></div>
+      </div>
+      <div class="absolute bottom-16 right-24 phone-mockup transform -rotate-8 hover:scale-105 transition-all duration-300">
+        <div class="phone-frame"><img src="assets/landing (8).avif" alt="Top Memes" class="phone-screen"/></div>
+      </div>
+    </div>
+
+    <div class="absolute inset-0 flex items-center justify-center" style="transform: translateY(250px);">
+      <button class="bg-background-dark text-white text-xl font-bold py-6 px-12 rounded-full border-2 border-white hover:bg-opacity-90">Download App</button>
+    </div>
+  </section>
+</section>
+<!-- ==================== END SECTION: Landing ==================== -->
+
+<!-- ==================== SECTION: Post Landing (from post landingpage.html) ==================== -->
+<section id="post-landing" class="bg-background-light">
+  <div class="flex flex-col items-center justify-start pt-20 text-center px-4">
+    <header class="mb-6">
+      <img alt="MemeMates Logo" class="h-12 w-12 mx-auto mb-4" src="assets/logo-512x512.png"/>
+    </header>
+    <main>
+      <h1 class="text-4xl md:text-5xl font-bold text-text-light dark:text-text-dark mb-4">Real Features, Real Connections</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-xl mx-auto">Discover the tools that make MemeMates a premium platform for creative social connections.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <a class="flex items-center bg-text-light dark:bg-text-dark text-background-light dark:text-background-dark py-3 px-6 rounded-full font-semibold transition-transform transform hover:scale-105 w-full sm:w-auto" href="#">
+          <div class="bg-primary rounded-full p-2 mr-3 -ml-3"><span class="material-icons text-text-light">apple</span></div>
+          Download iOS
+        </a>
+        <a class="flex items-center bg-text-light dark:bg-text-dark text-background-light dark:text-background-dark py-3 px-6 rounded-full font-semibold transition-transform transform hover:scale-105 w-full sm:w-auto" href="#">
+          <div class="bg-primary rounded-full p-2 mr-3 -ml-3"><span class="material-icons text-text-light">android</span></div>
+          Download Android
+        </a>
+      </div>
+      <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-12 mt-8">
+        <div class="text-right">
+          <img alt="Social media interface" class="w-72 h-72 object-contain rounded-lg mb-4" src="assets/post image (1).png"/>
+          <div class="opacity-0 translate-y-12 transition-all duration-1200 ease-out" data-animate>
+            <h3 class="text-2xl font-bold text-text-light dark:text-text-dark mb-4 transform transition-all duration-1000 ease-out">Create Memes that Matter.</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4 max-w-xs ml-auto transform transition-all duration-1000 ease-out">Design with automated templates, add your twist with overlays, edit with ease, and share in seconds.</p>
+            <div class="text-6xl font-light text-gray-300 dark:text-gray-600 transform transition-all duration-1000 ease-out">01</div>
+          </div>
+        </div>
+        <div class="text-right">
+          <img alt="Video call interface" class="w-72 h-72 object-contain rounded-lg mb-4" src="assets/post image (2).png"/>
+          <div class="opacity-0 translate-y-12 transition-all duration-1200 ease-out delay-300" data-animate>
+            <h3 class="text-2xl font-bold text-text-light dark:text-text-dark mb-4 transform transition-all duration-1000 ease-out">Your Anthem, Your Vibe.</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4 max-w-xs ml-auto transform transition-all duration-1000 ease-out">Share favorite tracks, explore new sounds, and discover music through real connections.</p>
+            <div class="text-6xl font-light text-gray-300 dark:text-gray-600 transform transition-all duration-1000 ease-out">02</div>
+          </div>
+        </div>
+        <div class="text-right">
+          <img alt="Chat messaging interface" class="w-72 h-72 object-contain rounded-lg mb-4" src="assets/post image (3).png"/>
+          <div class="opacity-0 translate-y-12 transition-all duration-1200 ease-out delay-600" data-animate>
+            <h3 class="text-2xl font-bold text-text-light dark:text-text-dark mb-4 transform transition-all duration-1000 ease-out">Express your Authentic self.</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4 max-w-xs ml-auto transform transition-all duration-1000 ease-out">Curate mood boards that tell your story, spark laughs, and help you find your people.</p>
+            <div class="text-6xl font-light text-gray-300 dark:text-gray-600 transform transition-all duration-1000 ease-out">03</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const observerOptions = { threshold: 0.2, rootMargin: '0px 0px -100px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+              entry.target.style.transition = 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+              const children = entry.target.querySelectorAll('h3, p, div');
+              children.forEach((child, index) => {
+                setTimeout(() => { child.style.opacity = '1'; child.style.transform = 'translateY(0)'; }, index * 150);
+              });
+            } else {
+              entry.target.style.opacity = '0';
+              entry.target.style.transform = 'translateY(12px)';
+              entry.target.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+              const children = entry.target.querySelectorAll('h3, p, div');
+              children.forEach(child => { child.style.opacity = '0'; child.style.transform = 'translateY(8px)'; });
+            }
+          });
+        }, observerOptions);
+        document.querySelectorAll('#post-landing [data-animate]').forEach(el => {
+          const children = el.querySelectorAll('h3, p, div');
+          children.forEach(child => { child.style.opacity = '0'; child.style.transform = 'translateY(8px)'; child.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'; });
+          observer.observe(el);
+        });
+      </script>
+    </main>
+  </div>
+</section>
+<!-- ==================== END SECTION: Post Landing ==================== -->
+
+<!-- ==================== SECTION: Testing (from testing.html) ==================== -->
+<section id="testing-sec" style="box-sizing:border-box;">
+  <section class="framer-87sm1x" data-framer-name="Download App" id="tickets" style="box-sizing: border-box; -webkit-font-smoothing: inherit; z-index: 5; background-image: linear-gradient(rgb(59, 27, 68) 0%, rgb(162, 78, 185) 100%); background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; flex-flow: column; flex: 0 0 auto; place-content: center; align-items: center; gap: 0px; width: 100%; height: min-content; padding: 200px 40px 560px; display: flex; position: relative; overflow: hidden; font-family: sans-serif; font-size: 12px;">
+    <div class="framer-1ha5t7l-container" style="box-sizing: border-box; -webkit-font-smoothing: inherit; z-index: 1; flex: 0 0 auto; width: 919px; height: auto; position: absolute; top: 650px; left: 50%; transform: translateX(-50%) rotate(-40deg) rotateX(30deg) rotateY(33.3098deg); opacity: 1; will-change: transform;">
+      <div class="framer-kXT8D framer-1iq31cm framer-v-2zdpon" data-framer-name="Used" data-highlight="true" style="box-sizing: border-box; -webkit-font-smoothing: inherit; flex-flow: row; place-content: center flex-start; align-items: center; gap: 0px; width: 919px; height: min-content; padding: 0px; display: flex; position: relative; overflow: visible; opacity: 1;">
+        <div class="framer-1saxr73" data-framer-name="Left" style="box-sizing: border-box; -webkit-font-smoothing: inherit; will-change: auto; flex-flow: row; flex: 1 0 0px; place-content: center; align-self: stretch; align-items: center; gap: 24px; width: 1px; height: auto; padding: 0px; display: flex; position: relative; overflow: hidden; border-radius: 40px; box-shadow: rgba(0, 0, 0, 0.15) -40px 40px 80px 0px; opacity: 1;">
+          <div data-framer-background-image-wrapper="true" style="box-sizing: border-box; -webkit-font-smoothing: inherit; position: absolute; border-radius: inherit; inset: 0px;"><img alt="" decoding="auto" height="884" src="https://framerusercontent.com/images/EeKG06dxwm0Rkn4A2fvFc1dZHf0.png?width=437&amp;height=884" style="box-sizing: border-box; -webkit-font-smoothing: inherit; display: block; width: 527px; height: 489px; border-radius: inherit; object-position: center center; object-fit: contain;" width="437" /></div>
+        </div>
+        <div class="framer-1a1p7qu" data-framer-name="Right" style="box-sizing: border-box; -webkit-font-smoothing: inherit; will-change: transform; flex-flow: row; flex: 0 0 auto; place-content: center; align-items: center; gap: 0px; width: min-content; min-width: 392px; height: min-content; min-height: 489px; padding: 64px; display: flex; position: relative; overflow: hidden; border-radius: 40px; box-shadow: rgba(0, 0, 0, 0.25) -40px 40px 40px 0px; transform: rotate(10deg); opacity: 1;">
+          <div data-framer-background-image-wrapper="true" style="box-sizing: border-box; -webkit-font-smoothing: inherit; position: absolute; border-radius: inherit; inset: 0px;"><img alt="" decoding="auto" height="884" src="https://framerusercontent.com/images/06t2VJO9Wzn80pZXGUin65HcFR0.png?width=437&amp;height=884" srcset="https://framerusercontent.com/images/06t2VJO9Wzn80pZXGUin65HcFR0.png?width=437&amp;height=884 437w" style="box-sizing: border-box; -webkit-font-smoothing: inherit; display: block; width: 392px; height: 489px; border-radius: inherit; object-position: center center; object-fit: contain;" width="437" /></div>
+          <div class="framer-19lkkmu" data-border="true" data-framer-name="Cutting lines" style="box-sizing: border-box; -webkit-font-smoothing: inherit; z-index: 1; flex-flow: row; flex: 0 0 auto; place-content: center; align-items: center; gap: 0px; width: 4px; padding: 0px; display: flex; position: absolute; top: 0px; bottom: 0px; left: -1px; overflow: hidden; --border-bottom-width: 0px; --border-color: #b0a6df; --border-left-width: 4px; --border-right-width: 0px; --border-style: dashed; --border-top-width: 0px; opacity: 1;">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="framer-77k7fl" data-framer-name="Container" style="box-sizing: border-box; -webkit-font-smoothing: inherit; flex-flow: column; flex: 0 0 auto; place-content: center flex-start; align-items: center; gap: 40px; width: 600px; max-width: 600px; height: min-content; padding: 0px; display: flex; position: relative; overflow: visible; will-change: transform; opacity: 1; transform: none;">
+      <div class="framer-ja9t1h" data-framer-name="Top" style="box-sizing: border-box; -webkit-font-smoothing: inherit; flex-flow: column; flex: 0 0 auto; place-content: center flex-start; align-items: center; gap: 16px; width: 600px; height: min-content; padding: 0px; display: flex; position: relative; overflow: visible;">
+        <div class="framer-1s0cweg" style="box-sizing: border-box; -webkit-font-smoothing: inherit; height: min-content; overflow: clip; flex-flow: row; flex: 0 0 auto; place-content: center; align-items: center; gap: 10px; width: 600px; padding: 0px; display: flex; position: relative;">
+          <div class="framer-p0sjea" data-framer-name="Countdown" style="box-sizing: border-box; -webkit-font-smoothing: inherit; will-change: auto; background-color: rgb(0, 0, 0); border-radius: 80px; flex-flow: row; flex: 0 0 auto; place-content: center; align-items: center; gap: 10px; width: min-content; height: min-content; padding: 12px 16px; display: flex; position: relative; overflow: hidden;">
+            <div class="framer-1ingq2p" style="box-sizing: border-box; -webkit-font-smoothing: inherit; aspect-ratio: 1 / 1; height: auto; will-change: auto; background-color: rgb(230, 242, 108); border-radius: 50%; flex: 0 0 auto; width: 8px; position: relative; overflow: hidden;">&nbsp;</div>
+            <div class="framer-17ft1ei" data-framer-component-type="RichTextContainer" style="box-sizing: border-box; -webkit-font-smoothing: inherit; position: relative; --framer-link-text-color: #09f; --framer-link-text-decoration: underline; white-space: pre; flex: 0 0 auto; width: auto; height: auto; outline: none; display: flex; flex-direction: column; justify-content: flex-start; transform: none;">
+              <p class="framer-text" style="box-sizing: border-box; -webkit-font-smoothing: inherit; margin: 0px; padding: 0px; font-family: &quot;DM Sans&quot;, &quot;DM Sans Placeholder&quot;, sans-serif; color: rgb(255, 255, 255); font-size: 16px; line-height: 19.2px;">Free to Join</p>
+            </div>
+          </div>
+          <div class="framer-1wq82io" data-framer-name="Countdown" style="box-sizing: border-box; -webkit-font-smoothing: inherit; will-change: auto; background-color: rgb(0, 0, 0); border-radius: 80px; flex-flow: row; flex: 0 0 auto; place-content: center; align-items: center; gap: 10px; width: min-content; height: min-content; padding: 12px 16px; display: flex; position: relative; overflow: hidden;">
+            <div class="framer-162r62b" style="box-sizing: border-box; -webkit-font-smoothing: inherit; aspect-ratio: 1 / 1; height: auto; will-change: auto; background-color: rgb(230, 242, 108); border-radius: 50%; flex: 0 0 auto; width: 8px; position: relative; overflow: hidden;">&nbsp;</div>
+            <div class="framer-1qwizes" data-framer-component-type="RichTextContainer" style="box-sizing: border-box; -webkit-font-smoothing: inherit; position: relative; --framer-link-text-color: #09f; --framer-link-text-decoration: underline; white-space: pre; flex: 0 0 auto; width: auto; height: auto; outline: none; display: flex; flex-direction: column; justify-content: flex-start; transform: none;">
+              <p class="framer-text" style="box-sizing: border-box; -webkit-font-smoothing: inherit; margin: 0px; padding: 0px; font-family: &quot;DM Sans&quot;, &quot;DM Sans Placeholder&quot;, sans-serif; color: rgb(255, 255, 255); font-size: 16px; line-height: 19.2px;">No Hidden Fees</p>
+            </div>
+          </div>
+        </div>
+        <div class="framer-1oruf4p" data-framer-component-type="RichTextContainer" style="box-sizing: border-box; -webkit-font-smoothing: inherit; position: relative; white-space-collapse: preserve; word-break: break-word; overflow-wrap: break-word; flex: 0 0 auto; width: 600px; height: auto; outline: none; display: flex; flex-direction: column; justify-content: flex-start; transform: none;">
+          <h2 class="framer-text" style="box-sizing: border-box; -webkit-font-smoothing: inherit; margin: 0px; padding: 0px; font-family: Poppins, &quot;Poppins Placeholder&quot;, sans-serif; font-weight: 500; color: rgb(255, 255, 255); font-size: 80px; letter-spacing: -3.2px; line-height: 88px; text-align: center;">Ready to start creating?</h2>
+        </div>
+        <div class="framer-kf4sep" data-framer-component-type="RichTextContainer" style="box-sizing: border-box; -webkit-font-smoothing: inherit; position: relative; white-space-collapse: preserve; word-break: break-word; overflow-wrap: break-word; flex: 0 0 auto; width: 600px; max-width: 640px; height: auto; outline: none; display: flex; flex-direction: column; justify-content: flex-start; transform: none;">
+          <p class="framer-text" style="box-sizing: border-box; -webkit-font-smoothing: inherit; margin: 0px; padding: 0px; font-family: &quot;DM Sans&quot;, &quot;DM Sans Placeholder&quot;, sans-serif; color: rgba(255, 255, 255, 0.8); font-size: 20px; letter-spacing: -0.4px; line-height: 28px; text-align: center;">Join our community and start building meaningful connections through shared humor and authentic expression.</p>
+        </div>
+      </div>
+      <div class="framer-yw8406" style="box-sizing: border-box; -webkit-font-smoothing: inherit; height: min-content; overflow: clip; flex-flow: row; flex: 0 0 auto; place-content: center; align-items: center; gap: 10px; width: 600px; padding: 0px; display: flex; position: relative;">
+        <div class="framer-1j1dtac-container hidden-1wif7cb hidden-1bcn5ap" id="1j1dtac" style="box-sizing: border-box; -webkit-font-smoothing: inherit; flex: 0 0 auto; width: 252px; height: 56px; position: relative;">
+          <div class="framer-1c3b0j1" data-framer-name="Icon" style="box-sizing: border-box; -webkit-font-smoothing: inherit; z-index: 1; flex-flow: row; flex: 0 0 auto; place-content: center flex-start; align-items: center; gap: 0px; width: 52px; padding: 14px; display: flex; position: absolute; top: 2px; bottom: 2px; left: 2px; overflow: visible; background-color: rgb(230, 242, 108); border-radius: 80px; opacity: 1;">
+            <div class="framer-k4bhwl-container" style="box-sizing: border-box; -webkit-font-smoothing: inherit; flex: 0 0 auto; width: 24px; height: 24px; position: relative; opacity: 1;"><div style="box-sizing: border-box; -webkit-font-smoothing: inherit; display: contents;">&nbsp;</div></div>
+          </div>
+        </div>
+        <div class="framer-q49si7-container hidden-1wif7cb hidden-1bcn5ap" style="box-sizing: border-box; -webkit-font-smoothing: inherit; flex: 0 0 auto; width: 252px; height: 56px; position: relative;">
+          <div class="framer-1c3b0j1" data-framer-name="Icon" style="box-sizing: border-box; -webkit-font-smoothing: inherit; z-index: 1; flex-flow: row; flex: 0 0 auto; place-content: center flex-start; align-items: center; gap: 0px; width: 52px; padding: 14px; display: flex; position: absolute; top: 2px; bottom: 2px; left: 2px; overflow: visible; background-color: rgb(230, 242, 108); border-radius: 80px; opacity: 1;">
+            <div class="framer-k4bhwl-container" style="box-sizing: border-box; -webkit-font-smoothing: inherit; flex: 0 0 auto; width: 24px; height: 24px; position: relative; opacity: 1;"><div style="box-sizing: border-box; -webkit-font-smoothing: inherit; display: contents;">&nbsp;</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="framer-zta9px hidden-1wif7cb hidden-1bcn5ap" data-border="true" data-framer-name="Desktop" id="footer" style="box-sizing: border-box; -webkit-font-smoothing: inherit; --border-bottom-width: 0px; --border-color: #ffffff26; --border-left-width: 0px; --border-right-width: 0px; --border-style: solid; --border-top-width: 1px; background-color: rgb(0, 0, 0); flex-flow: column; flex: 0 0 auto; place-content: center; align-items: center; gap: 32px; width: 100%; height: min-content; padding: 0px; display: flex; position: relative; font-family: sans-serif; font-size: 12px;">
+      <div class="framer-ijb73j" data-framer-name="Container" style="box-sizing: border-box; -webkit-font-smoothing: inherit; flex-flow: column; flex: 0 0 auto; place-content: flex-start center; align-items: flex-start; gap: 80px; width: 100%; max-width: 1600px; height: min-content; padding: 40px 80px; display: flex; position: relative; overflow: hidden;">
+        <div class="framer-13t6259" data-framer-name="Contact" style="box-sizing: border-box; -webkit-font-smoothing: inherit; flex-flow: column; flex: 0 0 auto; place-content: center; align-items: center; gap: 0px; width: 100%; height: min-content; padding: 0px; display: flex; position: relative; overflow: visible;">
+          <div class="framer-c8vbc2" data-framer-name="Contact heading" style="box-sizing: border-box; -webkit-font-smoothing: inherit; flex-flow: column; flex: 0 0 auto; place-content: center; align-items: center; gap: 10px; width: 100%; height: min-content; padding: 0px; display: flex; position: relative; overflow: visible;"></div>
+        </div>
+      </div>
+    </footer>
+  </section>
+  <!-- (end of testing.html content) -->
+
+<!-- ==================== SECTION: Pre Bottom (from pre bottom1.html) ==================== -->
+<section id="pre-bottom1" class="bg-[var(--background-color)] text-white">
+  <div class="flex items-center justify-center min-h-screen">
+    <div class="text-center p-4 max-w-4xl mx-auto">
+      <div class="flex justify-center space-x-4 mb-4">
+        <div class="bg-[var(--tag-bg-color)] text-[var(--tag-text-color)] text-sm font-medium px-4 py-2 rounded-full flex items-center"><span class="w-2.5 h-2.5 bg-[#D0FC5A] rounded-full mr-2"></span>Free to Join</div>
+        <div class="bg-[var(--tag-bg-color)] text-[var(--tag-text-color)] text-sm font-medium px-4 py-2 rounded-full flex items-center"><span class="w-2.5 h-2.5 bg-[#D0FC5A] rounded-full mr-2"></span>No Hidden Fees</div>
+      </div>
+      <h1 class="text-6xl md:text-8xl font-bold mb-4 leading-tight">Ready to start<br/>creating?</h1>
+      <p class="text-gray-300 max-w-2xl mx-auto text-lg mb-6">Join our community and start building meaningful connections through shared humor and authentic expression.</p>
+      <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+        <button class="bg-[var(--button-bg-color)] text-[var(--button-text-color)] font-semibold py-3 px-6 rounded-xl flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors w-64">
+          <div class="w-12 h-12 bg-[var(--icon-bg-color)] rounded-full flex items-center justify-center mr-4"><i class="fab fa-apple text-2xl text-[var(--icon-fg-color)]"></i></div>
+          <span class="text-lg">Download iOS</span>
+        </button>
+        <button class="bg-[var(--button-bg-color)] text-[var(--button-text-color)] font-semibold py-3 px-6 rounded-xl flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors w-64">
+          <div class="w-12 h-12 bg-[var(--icon-bg-color)] rounded-full flex items-center justify-center mr-4"><i class="fab fa-android text-2xl text-[var(--icon-fg-color)]"></i></div>
+          <span class="text-lg">Download Android</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="bg-[var(--background-color)] py-12 relative flex justify-center items-center -mt-32" style="perspective: 1000px;">
+    <div style="position: relative; left: 100px; top: -50px; transform: rotate(-40deg) rotateX(30deg) rotateY(33deg); z-index: 1; width: 919px;">
+      <div class="flex items-center justify-center">
+        <div style="flex: 1 0 0; width: 527px; height: 520px; border-radius: 40px; box-shadow: -40px 40px 80px rgba(0,0,0,0.15);" class="animate-hover-lift">
+          <img src="./assets/JCSraeK2peMCkW2TeOj8HqgMn9Y.webp" alt="App screenshot" style="width: 527px; height: 520px; object-fit: contain;" />
+        </div>
+        <div style="width: 4px; height: 520px; border-left: 4px dashed #ffffff; position: relative; left: 0px; transform: rotate(10deg); margin: 0 8px;"></div>
+        <div style="width: 392px; height: 520px; border-radius: 40px; box-shadow: -40px 40px 40px rgba(0,0,0,0.25); transform: rotate(10deg);" class="animate-hover-lift-right">
+          <img src="./assets/a2To5eLJjDizUuuemYzkS9b0.avif" alt="App logo screen" style="width: 392px; height: 520px; object-fit: contain;" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==================== END SECTION: Pre Bottom ==================== -->
+
+<!-- ==================== SECTION: Bottom (from bottom.html) ==================== -->
+<section id="bottom-sec" class="bg-background-dark text-gray-200 font-display">
+  <div class="flex flex-col min-h-screen">
+    <main class="flex-grow flex items-center justify-center p-8">
+      <div class="w-full max-w-7xl mx-auto text-center">
+        <h1 class="text-[18vw] md:text-[14vw] lg:text-[12rem] font-black leading-none tracking-tighter" style="background: -webkit-linear-gradient(135deg, #4F46E5, #EC4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MemeMates</h1>
+      </div>
+    </main>
+    <footer class="w-full p-8 bg-black">
+      <div class="w-full max-w-7xl mx-auto">
+        <div class="flex justify-end mb-16">
+          <a class="text-2xl md:text-3xl font-bold text-white hover:text-brand-pink transition-colors duration-300" href="#">Download App <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="border-t border-gray-700 pt-8">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+            <div>
+              <h3 class="font-bold text-white mb-4">Quick Links</h3>
+              <ul class="space-y-3">
+                <li><a class="text-gray-400 hover:text-brand-pink transition-colors" href="#">Privacy Policy</a></li>
+                <li><a class="text-gray-400 hover:text-brand-pink transition-colors" href="#">Terms of Service</a></li>
+                <li><a class="text-gray-400 hover:text-brand-pink transition-colors" href="#">Safety Standards</a></li>
+              </ul>
+            </div>
+            <div class="md:col-start-4 text-left md:text-left">
+              <h3 class="font-bold text-white mb-4">Social Links</h3>
+              <ul class="space-y-3">
+                <li><a class="text-gray-400 hover:text-brand-pink transition-colors" href="#">Instagram</a></li>
+                <li><a class="text-gray-400 hover:text-brand-pink transition-colors" href="#">LinkedIn</a></li>
+                <li><a class="text-gray-400 hover:text-brand-pink transition-colors" href="#">X</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+          <p class="mb-4 md:mb-0">©2025 MemeMates. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+</section>
+<!-- ==================== END SECTION: Bottom ==================== -->
+
+</body>
+</html>
+
+

@@ -10,52 +10,76 @@
     <!-- End of headStart -->
     <script>
     (function() {
-        window.addEventListener('load', function() {
-            try {
-                var currentPath = window.location.pathname || '/';
-                // Normalize duplicate segments like /legal/legal -> /legal
-                currentPath = currentPath.replace(/\/legal\/legal/g, '/legal');
+        function normalizePath(pathname) {
+            var p = (pathname || '/').toLowerCase();
+            p = p.replace(/\/{2,}/g, '/');
+            p = p.replace(/\/legal\/legal(\/|$)/, '/legal$1');
+            if (p.length > 1) p = p.replace(/\/+$/, '');
+            var aliases = {
+                '/legal/terms-of-use': '/legal/terms-and-conditions',
+                '/legal/terms': '/legal/terms-and-conditions',
+                '/legal/terms-of-service': '/legal/terms-and-conditions',
+                '/terms-of-use': '/legal/terms-and-conditions',
+                '/terms-of-service': '/legal/terms-and-conditions',
+                '/terms': '/legal/terms-and-conditions',
+                '/legal/privacy': '/legal/privacy-policy',
+                '/privacy-policy': '/legal/privacy-policy',
+                '/privacy': '/legal/privacy-policy',
+                '/legal/cookies': '/legal/cookie-policy',
+                '/cookies': '/legal/cookie-policy',
+                '/legal/safetystandards': '/legal/safety-standards',
+                '/safetystandards': '/legal/safety-standards',
+                '/safety-standards': '/legal/safety-standards'
+            };
+            if (aliases[p]) p = aliases[p];
+            return p === '' ? '/' : p;
+        }
 
-                if (window.location.pathname !== currentPath) {
-                    history.replaceState(null, '', currentPath);
-                }
-
-                // Do nothing on home
-                if (currentPath === '/' || currentPath === '') return;
-
-                // Match the same internal link patterns Framer uses
-                var selector = 'div#main a[href^="#"],div#main a[href^="/"],div#main a[href^="."]';
-                var anchors = document.querySelectorAll(selector);
-                var targetAnchor = null;
-
-                // Normalize trailing slashes for comparison
-                var normalizedCurrent = currentPath.replace(/\/+$/, '') || '/';
-
+        function findAnchorByPath(pathname) {
+            var normalized = normalizePath(pathname);
+            var lists = [
+                document.querySelectorAll('div#main a[href]'),
+                document.querySelectorAll('a[href]')
+            ];
+            for (var li = 0; li < lists.length; li++) {
+                var anchors = lists[li];
                 for (var i = 0; i < anchors.length; i++) {
                     var a = anchors[i];
                     try {
-                        var url = new URL(a.href, window.location.origin);
-                        var aPath = (url.pathname || '/').replace(/\/+$/, '') || '/';
-                        if (aPath === normalizedCurrent) {
-                            targetAnchor = a;
-                            break;
-                        }
-                    } catch (e) {
-                        // ignore malformed hrefs
-                    }
+                        var url = new URL(a.getAttribute('href'), window.location.origin);
+                        var aPath = normalizePath(url.pathname);
+                        if (aPath === normalized) return a;
+                    } catch (_) {}
                 }
-
-                // Fallback: if on a sub-legal page but no exact match, try the base /legal link
-                if (!targetAnchor && normalizedCurrent.indexOf('/legal/') === 0) {
-                    targetAnchor = document.querySelector('div#main a[href="/legal"]');
-                }
-
-                if (targetAnchor) {
-                    targetAnchor.click();
-                }
-            } catch (e) {
-                // silently ignore
             }
+            if (normalized.indexOf('/legal/') === 0) {
+                var base = document.querySelector('div#main a[href="/legal"], a[href="/legal"]');
+                if (base) return base;
+            }
+            return null;
+        }
+
+        function tryRoute() {
+            try {
+                var currentPath = normalizePath(window.location.pathname);
+                if ((window.location.pathname || '').toLowerCase() !== currentPath) {
+                    history.replaceState(null, '', currentPath);
+                }
+                if (currentPath === '/') return true;
+                var anchor = findAnchorByPath(currentPath);
+                if (anchor) { anchor.click(); return true; }
+            } catch (_) {}
+            return false;
+        }
+
+        window.addEventListener('load', function() {
+            if (tryRoute()) return;
+            var timeoutId;
+            var observer = new MutationObserver(function() {
+                if (tryRoute()) { observer.disconnect(); clearTimeout(timeoutId); }
+            });
+            observer.observe(document.documentElement, { childList: true, subtree: true });
+            timeoutId = setTimeout(function() { observer.disconnect(); }, 3000);
         });
     })();
     </script>
