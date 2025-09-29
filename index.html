@@ -59,6 +59,32 @@
             return null;
         }
 
+        function pathToTargetId(pathname) {
+            var normalized = normalizePath(pathname);
+            var parts = normalized.split('/').filter(Boolean);
+            if (parts.length === 0) return null;
+            // Prefer last segment (e.g., /legal/privacy-policy -> privacy-policy)
+            return parts[parts.length - 1];
+        }
+
+        function scrollToSectionFallback(pathname) {
+            var id = pathToTargetId(pathname);
+            if (!id) return false;
+            var candidates = [
+                document.getElementById(id),
+                document.querySelector('[data-section-id="' + id + '"]'),
+                document.querySelector('[data-anchor="' + id + '"]')
+            ];
+            for (var i = 0; i < candidates.length; i++) {
+                var el = candidates[i];
+                if (el) {
+                    try { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch(_) { el.scrollIntoView(); }
+                    return true;
+                }
+            }
+            return false;
+        }
+
         function tryRoute() {
             try {
                 var currentPath = normalizePath(window.location.pathname);
@@ -68,6 +94,8 @@
                 if (currentPath === '/') return true;
                 var anchor = findAnchorByPath(currentPath);
                 if (anchor) { anchor.click(); return true; }
+                // Fallback: attempt to scroll to a section marker by ID/data-attribute
+                if (scrollToSectionFallback(currentPath)) return true;
             } catch (_) {}
             return false;
         }
@@ -79,7 +107,8 @@
                 if (tryRoute()) { observer.disconnect(); clearTimeout(timeoutId); }
             });
             observer.observe(document.documentElement, { childList: true, subtree: true });
-            timeoutId = setTimeout(function() { observer.disconnect(); }, 3000);
+            // Allow more time for dynamic content
+            timeoutId = setTimeout(function() { observer.disconnect(); }, 10000);
         });
     })();
     </script>
