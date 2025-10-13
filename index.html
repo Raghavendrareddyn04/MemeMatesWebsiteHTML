@@ -6,21 +6,23 @@
     
   
     <!-- Start of headStart -->
-  <script>
+ <script>
 // SPA Router - Handles direct URL navigation
 (function() {
   // Function to simulate click on a specific link
-  function simulateClick(selector) {
-    // Wait a bit for the page to fully load
-    setTimeout(function() {
-      var anchor = document.querySelector(selector);
-      if (anchor) {
-        anchor.click();
-        console.log('Clicked:', selector);
-      } else {
-        console.log('Link not found:', selector);
-      }
-    }, 100);
+  function simulateClick(selectors) {
+    // Try multiple selectors
+    for (let selector of selectors) {
+      setTimeout(function() {
+        var anchor = document.querySelector(selector);
+        if (anchor) {
+          anchor.click();
+          console.log('✓ Clicked:', selector);
+          return true;
+        }
+      }, 100);
+    }
+    console.log('✗ No link found for selectors:', selectors);
   }
 
   // Function to handle routing
@@ -40,27 +42,27 @@
     // Remove extra 'legal' if it appears twice in the URL
     path = path.replace(/\/legal\/legal/g, '/legal');
     
-    console.log('Current path:', path);
+    console.log('📍 Current path:', path);
 
-    // Handle different paths
+    // Handle different paths with multiple selector variations
     if (path.includes('/characters')) {
-      simulateClick('a[href="/characters"]');
+      simulateClick(['a[href="/characters"]', 'a[href="./characters"]']);
     } else if (path.includes('/privacy-policy')) {
-      simulateClick('a[href="/legal/privacy-policy"]');
+      simulateClick(['a[href="/legal/privacy-policy"]', 'a[href="./privacy-policy"]', 'a[href="/privacy-policy"]']);
     } else if (path.includes('/cookie-policy')) {
-      simulateClick('a[href="/legal/cookie-policy"]');
+      simulateClick(['a[href="/legal/cookie-policy"]', 'a[href="./cookie-policy"]', 'a[href="/cookie-policy"]']);
     } else if (path.includes('/terms-and-conditions')) {
-      simulateClick('a[href="/legal/terms-and-conditions"]');
+      simulateClick(['a[href="/legal/terms-and-conditions"]', 'a[href="./terms-and-conditions"]', 'a[href="/terms-and-conditions"]']);
     } else if (path.includes('/ip-notice')) {
-      simulateClick('a[href="/legal/ip-notice"]');
+      simulateClick(['a[href="/legal/ip-notice"]', 'a[href="./ip-notice"]', 'a[href="/ip-notice"]']);
     } else if (path.includes('/safety-standards')) {
-      simulateClick('a[href="/safety-standards"]');
+      simulateClick(['a[href="/safety-standards"]', 'a[href="./safety-standards"]']);
     } else if (path.includes('/terms-of-use')) {
-      simulateClick('a[href="/terms-of-use"]');
+      simulateClick(['a[href="/terms-of-use"]', 'a[href="./terms-of-use"]']);
     } else if (path.includes('/storyline')) {
-      simulateClick('a[href="/storyline"]');
+      simulateClick(['a[href="/storyline"]', 'a[href="./storyline"]']);
     } else if (path.includes('/contact')) {
-      simulateClick('a[href="/contact"]');
+      simulateClick(['a[href="/contact"]', 'a[href="./contact"]']);
     }
   }
 
