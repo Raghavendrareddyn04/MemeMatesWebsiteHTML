@@ -6,55 +6,71 @@
     
   
     <!-- Start of headStart -->
-   <script>
-// Function to check if the URL contains specific paths and simulate a click event
-window.onload = function() {
-  // Check if there's a redirect from 404.html
-  var redirect = sessionStorage.getItem('redirect');
-  if (redirect) {
-    sessionStorage.removeItem('redirect');
-    // Update the URL without reloading
-    history.replaceState(null, null, '/MemeMatesWebsiteHTML' + redirect);
+  <script>
+// SPA Router - Handles direct URL navigation
+(function() {
+  // Function to simulate click on a specific link
+  function simulateClick(selector) {
+    // Wait a bit for the page to fully load
+    setTimeout(function() {
+      var anchor = document.querySelector(selector);
+      if (anchor) {
+        anchor.click();
+        console.log('Clicked:', selector);
+      } else {
+        console.log('Link not found:', selector);
+      }
+    }, 100);
   }
 
-  // Get the current path
-  let path = window.location.pathname;
-  
-  // Remove the GitHub Pages repo name from the path if present
-  path = path.replace(/^\/MemeMatesWebsiteHTML/, '');
+  // Function to handle routing
+  function handleRoute() {
+    // Check if there's a redirect from 404.html
+    var redirect = sessionStorage.getItem('redirect');
+    var path = redirect || window.location.pathname;
+    
+    // Clear the redirect from sessionStorage
+    if (redirect) {
+      sessionStorage.removeItem('redirect');
+    }
+    
+    // Remove the GitHub Pages repo name from the path if present
+    path = path.replace(/^\/MemeMatesWebsiteHTML/, '');
+    
+    // Remove extra 'legal' if it appears twice in the URL
+    path = path.replace(/\/legal\/legal/g, '/legal');
+    
+    console.log('Current path:', path);
 
-  // Remove extra 'legal' if it appears twice in the URL
-  path = path.replace(/\/legal\/legal/g, '/legal');
-
-  // Handle different paths
-  if (path.includes('/characters')) {
-    simulateClick('a[href="/characters"]');
-  } else if (path.includes('/legal/privacy-policy') || path.includes('/privacy-policy')) {
-    simulateClick('a[href="/legal/privacy-policy"]');
-  } else if (path.includes('/legal/cookie-policy') || path.includes('/cookie-policy')) {
-    simulateClick('a[href="/legal/cookie-policy"]');
-  } else if (path.includes('/legal/terms-and-conditions') || path.includes('/terms-and-conditions')) {
-    simulateClick('a[href="/legal/terms-and-conditions"]');
-  } else if (path.includes('/legal/ip-notice') || path.includes('/ip-notice')) {
-    simulateClick('a[href="/legal/ip-notice"]');
-  } else if (path.includes('/safety-standards')) {
-    simulateClick('a[href="/safety-standards"]');
-  } else if (path.includes('/terms-of-use')) {
-    simulateClick('a[href="/terms-of-use"]');
-  } else if (path.includes('/storyline')) {
-    simulateClick('a[href="/storyline"]');
-  } else if (path.includes('/contact')) {
-    simulateClick('a[href="/contact"]');
+    // Handle different paths
+    if (path.includes('/characters')) {
+      simulateClick('a[href="/characters"]');
+    } else if (path.includes('/privacy-policy')) {
+      simulateClick('a[href="/legal/privacy-policy"]');
+    } else if (path.includes('/cookie-policy')) {
+      simulateClick('a[href="/legal/cookie-policy"]');
+    } else if (path.includes('/terms-and-conditions')) {
+      simulateClick('a[href="/legal/terms-and-conditions"]');
+    } else if (path.includes('/ip-notice')) {
+      simulateClick('a[href="/legal/ip-notice"]');
+    } else if (path.includes('/safety-standards')) {
+      simulateClick('a[href="/safety-standards"]');
+    } else if (path.includes('/terms-of-use')) {
+      simulateClick('a[href="/terms-of-use"]');
+    } else if (path.includes('/storyline')) {
+      simulateClick('a[href="/storyline"]');
+    } else if (path.includes('/contact')) {
+      simulateClick('a[href="/contact"]');
+    }
   }
-};
 
-// Helper function to simulate click on a specific link
-function simulateClick(selector) {
-  const anchor = document.querySelector(selector);
-  if (anchor) {
-    anchor.click();
+  // Run when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', handleRoute);
+  } else {
+    handleRoute();
   }
-}
+})();
 </script>
     <!-- End of headStart -->
     <meta name="viewport" content="width=device-width">
