@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script>
+    // GitHub Pages SPA redirect solution
+    // This script captures the current path and redirects to index.html with the path as a query parameter
+    (function() {
+      var path = window.location.pathname;
+      var search = window.location.search;
+      
+      // Get the base path for GitHub Pages (e.g., /MemeMatesWebsiteHTML/)
+      var segments = path.split('/').filter(function(segment) { return segment; });
+      
+      // Store the full path (removing the repo name if present)
+      var redirect = '/' + segments.slice(1).join('/');
+      
+      // Redirect to index.html with the path stored in sessionStorage
+      sessionStorage.setItem('redirect', redirect + search);
+      window.location.replace('/MemeMatesWebsiteHTML/');
+    })();
+    </script>
+</head>
+<body>
+    <p>Redirecting...</p>
+</body>
+</html>

@@ -6,47 +6,44 @@
     
   
     <!-- Start of headStart -->
-    <script>
+   <script>
 // Function to check if the URL contains specific paths and simulate a click event
 window.onload = function() {
+  // Check if there's a redirect from 404.html
+  var redirect = sessionStorage.getItem('redirect');
+  if (redirect) {
+    sessionStorage.removeItem('redirect');
+    // Update the URL without reloading
+    history.replaceState(null, null, '/MemeMatesWebsiteHTML' + redirect);
+  }
+
   // Get the current path
   let path = window.location.pathname;
+  
+  // Remove the GitHub Pages repo name from the path if present
+  path = path.replace(/^\/MemeMatesWebsiteHTML/, '');
 
   // Remove extra 'legal' if it appears twice in the URL
   path = path.replace(/\/legal\/legal/g, '/legal');
 
-  // If the path has changed, update the URL without reloading the page
-  if (window.location.pathname !== path) {
-    history.replaceState(null, null, path);
-  }
-
   // Handle different paths
   if (path.includes('/characters')) {
-    // Simulate click for /characters
     simulateClick('a[href="/characters"]');
   } else if (path.includes('/legal/privacy-policy') || path.includes('/privacy-policy')) {
-    // Simulate click for /legal/privacy-policy
     simulateClick('a[href="/legal/privacy-policy"]');
   } else if (path.includes('/legal/cookie-policy') || path.includes('/cookie-policy')) {
-    // Simulate click for /legal/cookie-policy
     simulateClick('a[href="/legal/cookie-policy"]');
   } else if (path.includes('/legal/terms-and-conditions') || path.includes('/terms-and-conditions')) {
-    // Simulate click for /legal/terms-and-conditions
     simulateClick('a[href="/legal/terms-and-conditions"]');
   } else if (path.includes('/legal/ip-notice') || path.includes('/ip-notice')) {
-    // Simulate click for /legal/ip-notice
     simulateClick('a[href="/legal/ip-notice"]');
   } else if (path.includes('/safety-standards')) {
-    // Simulate click for /safety-standards
     simulateClick('a[href="/safety-standards"]');
   } else if (path.includes('/terms-of-use')) {
-    // Simulate click for /terms-of-use
     simulateClick('a[href="/terms-of-use"]');
   } else if (path.includes('/storyline')) {
-    // Simulate click for /storyline
     simulateClick('a[href="/storyline"]');
   } else if (path.includes('/contact')) {
-    // Simulate click for /contact
     simulateClick('a[href="/contact"]');
   }
 };
