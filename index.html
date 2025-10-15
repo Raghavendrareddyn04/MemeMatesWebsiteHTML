@@ -6,75 +6,14 @@
     
   
     <!-- Start of headStart -->
- <script>
-// SPA Router - Handles direct URL navigation
-(function() {
-  // Function to simulate click on a specific link
-  function simulateClick(selectors) {
-    // Try multiple selectors
-    for (let selector of selectors) {
-      setTimeout(function() {
-        var anchor = document.querySelector(selector);
-        if (anchor) {
-          anchor.click();
-          console.log('✓ Clicked:', selector);
-          return true;
-        }
-      }, 100);
-    }
-    console.log('✗ No link found for selectors:', selectors);
-  }
 
-  // Function to handle routing
-  function handleRoute() {
-    // Check if there's a redirect from 404.html
-    var redirect = sessionStorage.getItem('redirect');
-    var path = redirect || window.location.pathname;
-    
-    // Clear the redirect from sessionStorage
-    if (redirect) {
-      sessionStorage.removeItem('redirect');
-    }
-    
-    // Remove the GitHub Pages repo name from the path if present
-    path = path.replace(/^\/MemeMatesWebsiteHTML/, '');
-    
-    // Remove extra 'legal' if it appears twice in the URL
-    path = path.replace(/\/legal\/legal/g, '/legal');
-    
-    console.log('📍 Current path:', path);
+<!-- For adding script so that the navigation works fine for 
+https://mememates.org/terms-of-use
+https://mememates.org/privacy-policy
+https://mememates.org/safety-standards -->
 
-    // Handle different paths with multiple selector variations
-    if (path.includes('/characters')) {
-      simulateClick(['a[href="/characters"]', 'a[href="./characters"]']);
-    } else if (path.includes('/privacy-policy')) {
-      simulateClick(['a[href="/legal/privacy-policy"]', 'a[href="./privacy-policy"]', 'a[href="/privacy-policy"]']);
-    } else if (path.includes('/cookie-policy')) {
-      simulateClick(['a[href="/legal/cookie-policy"]', 'a[href="./cookie-policy"]', 'a[href="/cookie-policy"]']);
-    } else if (path.includes('/terms-and-conditions')) {
-      simulateClick(['a[href="/legal/terms-and-conditions"]', 'a[href="./terms-and-conditions"]', 'a[href="/terms-and-conditions"]']);
-    } else if (path.includes('/ip-notice')) {
-      simulateClick(['a[href="/legal/ip-notice"]', 'a[href="./ip-notice"]', 'a[href="/ip-notice"]']);
-    } else if (path.includes('/safety-standards')) {
-      simulateClick(['a[href="/safety-standards"]', 'a[href="./safety-standards"]']);
-    } else if (path.includes('/terms-of-use')) {
-      simulateClick(['a[href="/terms-of-use"]', 'a[href="./terms-of-use"]']);
-    } else if (path.includes('/storyline')) {
-      simulateClick(['a[href="/storyline"]', 'a[href="./storyline"]']);
-    } else if (path.includes('/contact')) {
-      simulateClick(['a[href="/contact"]', 'a[href="./contact"]']);
-    }
-  }
-
-  // Run when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', handleRoute);
-  } else {
-    handleRoute();
-  }
-})();
-</script>
     <!-- End of headStart -->
+     
     <meta name="viewport" content="width=device-width">
     <meta name="generator" content="Framer 62e4d63">
     <title>MemeMates - Create. Connect. Laugh together.</title>
