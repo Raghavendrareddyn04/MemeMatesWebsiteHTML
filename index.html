@@ -7,54 +7,10 @@
   
     <!-- Start of headStart -->
 
-    <script> 
-      // Function to check if the URL contains specific paths and simulate a click event 
-      window.onload = function () { 
-        // Get the current path 
-        let path = window.location.pathname; 
- 
-        // Remove extra 'legal' if it appears twice in the URL 
-        path = path.replace(/\/legal\/legal/g, '/legal'); 
- 
-        // If the path has changed, update the URL without reloading the page 
-        if (window.location.pathname !== path) { 
-          history.replaceState(null, null, path); 
-        } 
- 
-        // Handle different paths 
-        if (path.includes('/privacy-policy')) { 
-          // Simulate click for /characters 
-          simulateClick('a[href="/privacy-policy"]'); 
-        } else if (path.includes('/terms-of-use')) { 
-          // Simulate click for /legal/privacy-policy 
-          simulateClick('a[href="/terms-of-use"]'); 
-        } else if (path.includes('/safety-standards')) { 
-          // Simulate click for /legal/cookie-policy 
-          simulateClick('a[href="/safety-standards"]'); 
-        } else if (path.includes('/legal/terms-and-conditions')) { 
-          // Simulate click for /legal/terms-and-conditions 
-          simulateClick('a[href="/legal/terms-and-conditions"]'); 
-        } else if (path.includes('/legal/ip-notice')) { 
-          // Simulate click for /legal/ip-notice 
-          simulateClick('a[href="/legal/ip-notice"]'); 
-        } else if (path.includes('/storyline')) { 
-          // Simulate click for /storyline 
-          simulateClick('a[href="/storyline"]'); 
-        } else if (path.includes('/contact')) { 
-          // Simulate click for /contact 
-          simulateClick('a[href="/contact"]'); 
-        } 
-      }; 
- 
-      // Helper function to simulate click on a specific link 
-      function simulateClick(selector) { 
-        const anchor = document.querySelector(selector); 
-        if (anchor) { 
-          anchor.click(); 
-        } 
-      } 
-    </script>
-
+<!-- For adding script so that the navigation works fine for 
+https://mememates.org/terms-of-use
+https://mememates.org/privacy-policy
+https://mememates.org/safety-standards -->
 
     <!-- End of headStart -->
      
