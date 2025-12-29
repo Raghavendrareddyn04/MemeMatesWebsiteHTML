@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script>
+        // Map of blog post slugs to actual HTML files
+        const blogPosts = {
+            'built-for-safe-real-connections': 'built-for-safe-real-connections.html',
+            'no-bios-no-filters-just-vibes': 'no-bios-no-filters-just-vibes.html',
+            'memes-are-the-new-love-language': 'memes-are-the-new-love-language.html',
+            'mememates-is-built-around-creative-expression': 'mememates-is-built-around-creative-expression.html'
+        };
+
+        // Get the current pathname
+        const pathname = window.location.pathname;
+        
+        // Extract the blog post slug from paths like:
+        // /blog/slug or /MemeMatesWebsiteHTML/blog/slug or /blog/slug/
+        const blogMatch = pathname.match(/\/(?:MemeMatesWebsiteHTML\/)?blog\/([^\/]+)/);
+        
+        if (blogMatch) {
+            const slug = blogMatch[1];
+            
+            // Check if we have a mapping for this slug
+            if (blogPosts[slug]) {
+                // Get the base path (everything before /blog/)
+                const basePath = pathname.split('/blog/')[0];
+                const basePathClean = basePath && !basePath.endsWith('/') ? basePath + '/' : basePath || '/';
+                
+                // Redirect to the actual HTML file
+                const redirectPath = basePathClean + blogPosts[slug];
+                window.location.replace(redirectPath + window.location.search + window.location.hash);
+            } else {
+                // Slug not found, redirect to home
+                const basePath = pathname.split('/blog/')[0];
+                const basePathClean = basePath && !basePath.endsWith('/') ? basePath + '/' : basePath || '/';
+                window.location.replace(basePathClean + 'index.html');
+            }
+        } else {
+            // Not a blog route, redirect to home
+            const basePath = pathname.split('/').slice(0, -1).join('/');
+            const basePathClean = basePath && !basePath.endsWith('/') ? basePath + '/' : basePath || '/';
+            window.location.replace(basePathClean + 'index.html');
+        }
+    </script>
+</head>
+<body>
+    <p>Redirecting...</p>
+</body>
+</html>
+
